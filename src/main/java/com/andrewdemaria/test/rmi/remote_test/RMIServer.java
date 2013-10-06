@@ -1,33 +1,34 @@
 package com.andrewdemaria.test.rmi.remote_test;
 
-import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.rmi.registry.*; 
  
 public class RMIServer 
-   // extends UnicastRemoteObject 
     implements RMIServerIntf {
     public static final String MESSAGE = "Hello world";
  
     public RMIServer() throws RemoteException {
-       // super(0);    // required to avoid the 'mic' step, see below
+    	
     }
  
-    public String getMessage() {
+    public String getMessage() throws RemoteException {
         return MESSAGE;
     }
  
     public static void main(String args[]) throws Exception {
-//        if (System.getSecurityManager() == null) {
-//            System.setSecurityManager(new SecurityManager());
-//        }
+
+//    	if(System.getSecurityManager()==null){
+//            System.setSecurityManager(new RMISecurityManager());
+//    	}
         System.out.println("RMI server started");
         
         //Instantiate RmiServer
         RMIServer obj = new RMIServer();
  
         try { //special exception handler for registry creation
+        	
             RMIServerIntf stub = (RMIServerIntf) UnicastRemoteObject.exportObject(obj,0);
             Registry reg;
             try {
